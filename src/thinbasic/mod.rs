@@ -1,3 +1,10 @@
+/*
+
+    Binding to thinCore - thinBasic internal engine.
+    Functionality present here is used to interact with thinBasic.
+
+*/
+
 pub mod core
 {
 	extern crate libloading;	// For thinCore

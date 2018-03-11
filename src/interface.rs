@@ -1,3 +1,9 @@
+/*
+
+    Module functions, basically internal function wrappers doing the parsing.
+
+*/
+
 use thinbasic;
 use internal;
 
