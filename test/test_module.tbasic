@@ -1,0 +1,40 @@
+uses "console"
+uses "rusty"
+
+function tbMain()
+  
+  long functionsFound = tally(app_listkeywords, $TAB + "rusty")
+  if functionsFound = 0 then
+    printl "Copy the compiled module to " + app_path + "\Mod first" in 12
+    printl "Press any key to quit..."
+    waitkey
+    exit function
+  else
+    printl "Rust keyword found:"
+    for i as long = 1 to functionsFound
+      printl "rusty_" + grab$(app_listkeywords, "rusty_", $TAB, i) in 15
+    next
+    printl    
+  end if
+  
+  printl "ThinBASIC is about to use Rust module"
+  
+  print  "ThinBasic: " in 10
+  printl "Dear Rust, how much is -3 + 7?"
+  print  "Rust:      " in 10
+  print  "Dear ThinBASIC, it is: "
+  dword  lResult = rusty_sum_two_longs -3, 7  
+  printl lResult in 14
+  
+  printl
+ 
+  print  "ThinBasic: " in 10
+  printl "Dear Rust, how much is 2000000000 + 1000000000?"
+  print  "Rust:      " in 10
+  print  "Dear ThinBASIC, it is: "
+  dword  dwResult = rusty_sum_two_dwords 2000000000, 1000000000  
+  printl dwResult in 14
+  
+  waitkey
+  
+end function

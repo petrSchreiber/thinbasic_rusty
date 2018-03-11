@@ -1,0 +1,14 @@
+[package]
+name = "thinbasic_rusty"
+version = "0.1.0"
+authors = ["petrSchreiber <petrschreiber@gmail.com>"]
+
+[dependencies]
+libc = "0.2"
+libloading = "0.5"
+winrt = "0.1.0"
+
+[lib]
+name = "thinbasic_rusty"
+crate-type = ["cdylib"]
+
