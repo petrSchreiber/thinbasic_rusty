@@ -28,7 +28,7 @@ A bit more _basic_ indeed. Just [download the installer](http://www.thinbasic.co
 
 ### How to test the DLL?
 * Copy the dll to _thinBasic/Mod_ directory
-* Run the script _test/test_module.tbasic_.
+* Run the script _tests/test_module.tbasic_.
 
 ## IDE recommendations
 I strongly recommend [Sublime Text 3](https://www.sublimetext.com/3) for Rust editing. It is very elegant. Just boost it with [rust-enhanced](https://github.com/rust-lang/rust-enhanced) plugin.
