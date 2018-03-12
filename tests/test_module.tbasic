@@ -23,7 +23,7 @@ function tbMain()
   printl "Dear Rust, how much is -3 + 7?"
   print  "Rust:      " in 10
   print  "Dear ThinBASIC, it is: "
-  dword  lResult = rusty_sum_two_longs -3, 7  
+  dword  lResult = rusty_sum_two_longs -3, 7
   printl lResult in 14
   
   printl
@@ -32,7 +32,7 @@ function tbMain()
   printl "Dear Rust, how much is 2000000000 + 1000000000?"
   print  "Rust:      " in 10
   print  "Dear ThinBASIC, it is: "
-  dword  dwResult = rusty_sum_two_dwords 2000000000, 1000000000  
+  dword  dwResult = rusty_sum_two_dwords(2000000000, 1000000000)  ' -- Optional use of parenthesis
   printl dwResult in 14
   
   waitkey

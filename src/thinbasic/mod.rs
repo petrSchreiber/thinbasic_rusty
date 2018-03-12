@@ -29,7 +29,7 @@ pub mod core
 
 	*/
 
-	// TODO: Signature
+	#[allow(dead_code)]
 	pub fn add_function<T>(symbol_name: &str, function_ptr: extern fn() -> T) -> i32
 	{
 		unsafe
@@ -49,27 +49,36 @@ pub mod core
 
 	*/
 
-	pub fn parse_i32(num: *const i32)
+	#[allow(dead_code)]
+	pub fn parse_i32() -> i32
 	{
 		unsafe
 		{
 			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
 			let thinbasic_parselong: libloading::Symbol<unsafe extern fn(*const i32)> = lib.get(b"thinBasic_ParseLong").unwrap();
-			thinbasic_parselong(num);
+			let num: i32 = 0;
+			thinbasic_parselong(&num);
+
+			num
 		}
 	}
 
-	pub fn parse_u32(num: *const u32)
+	#[allow(dead_code)]
+	pub fn parse_u32() -> u32
 	{
 		unsafe
 		{
 			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
 			let thinbasic_parsedword: libloading::Symbol<unsafe extern fn(*const u32)> = lib.get(b"thinBasic_ParseDWord").unwrap();
-			thinbasic_parsedword(num);
+			let num: u32 = 0;
+			thinbasic_parsedword(&num);
+
+			num
 		}
 	}
 
-	pub fn check_comma_mandatory() -> bool
+	#[allow(dead_code)]
+	pub fn check_comma() -> bool
 	{
 		unsafe
 		{
@@ -80,4 +89,107 @@ pub mod core
 			return if result == 0 { false } else { true }
 		}
 	}
+
+	#[allow(dead_code)]
+	pub fn check_comma_optional() -> bool
+	{
+		unsafe
+		{
+			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+			let thinbasic_checkcomma_optional: libloading::Symbol<unsafe extern fn() -> i32> = lib.get(b"thinBasic_CheckComma_Optional").unwrap();
+			let result = thinbasic_checkcomma_optional();
+
+			return if result == 0 { false } else { true }
+		}
+	}
+
+	#[allow(dead_code)]
+	pub fn check_open_parens() -> bool
+	{
+		unsafe
+		{
+			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+			let thinbasic_checkopenparens_mandatory: libloading::Symbol<unsafe extern fn() -> i32> = lib.get(b"thinBasic_CheckOpenParens_Mandatory").unwrap();
+			let result = thinbasic_checkopenparens_mandatory();
+
+			return if result == 0 { false } else { true }
+		}
+	}
+
+	#[allow(dead_code)]
+	pub fn check_open_parens_optional() -> bool
+	{
+		unsafe
+		{
+			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+			let thinbasic_checkopenparens_optional: libloading::Symbol<unsafe extern fn() -> i32> = lib.get(b"thinBasic_CheckOpenParens_Optional").unwrap();
+			let result = thinbasic_checkopenparens_optional();
+
+			return if result == 0 { false } else { true }
+		}
+	}
+
+	#[allow(dead_code)]
+	pub fn check_close_parens() -> bool
+	{
+		unsafe
+		{
+			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+			let thinbasic_checkcloseparens_mandatory: libloading::Symbol<unsafe extern fn() -> i32> = lib.get(b"thinBasic_CheckCloseParens_Mandatory").unwrap();
+			let result = thinbasic_checkcloseparens_mandatory();
+
+			return if result == 0 { false } else { true }
+		}
+	}
+
+	#[allow(dead_code)]
+	pub fn check_close_parens_optional() -> bool
+	{
+		unsafe
+		{
+			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+			let thinbasic_checkcloseparens_optional: libloading::Symbol<unsafe extern fn() -> i32> = lib.get(b"thinBasic_CheckCloseParens_Optional").unwrap();
+			let result = thinbasic_checkcloseparens_optional();
+
+			return if result == 0 { false } else { true }
+		}
+	}	
+
+
+	/*
+
+	 Error handling
+
+	*/
+
+	#[allow(dead_code)]
+	pub enum Error
+	{
+		ModuleSpecific = 500
+	}	
+
+	pub fn error_free() -> bool
+	{
+		unsafe
+		{
+			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+			let thinbasic_errorfree: libloading::Symbol<unsafe extern fn() -> i32> = lib.get(b"thinBasic_ErrorFree").unwrap();
+			let result = thinbasic_errorfree();
+
+			return if result == 0 { false } else { true }
+		}
+	}
+
+	pub fn raise_runtime_error(error_type: Error, description: &str) -> bool
+	{
+		unsafe
+		{
+			let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+			let thinbasic_runtimeerror: libloading::Symbol<unsafe extern fn(error_type: i32, error_description: winrt::BStr) -> i32> = lib.get(b"thinBasic_RunTimeError").unwrap();
+
+			let result = thinbasic_runtimeerror(error_type as i32, winrt::BStr::from(description));
+
+			return if result == 0 { false } else { true }
+		}
+	}	
 }

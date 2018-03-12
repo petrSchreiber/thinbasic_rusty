@@ -9,24 +9,32 @@ use internal;
 
 pub extern fn rusty_sum_two_longs() -> i32 {
 
-    let parsed_a: i32 = 0;
-    let parsed_b: i32 = 0;
+    let parens_present = thinbasic::core::check_open_parens_optional();
+    let parsed_a = thinbasic::core::parse_i32();
+    thinbasic::core::check_comma();
+    let parsed_b = thinbasic::core::parse_i32();
+    if parens_present { thinbasic::core::check_close_parens(); }
 
-    thinbasic::core::parse_i32(&parsed_a);
-    thinbasic::core::check_comma_mandatory();
-    thinbasic::core::parse_i32(&parsed_b);
+    if thinbasic::core::error_free() {
+        return internal::sum_two_longs(parsed_a, parsed_b)
+    }
 
-	internal::sum_two_longs(parsed_a, parsed_b)
+    thinbasic::core::raise_runtime_error(thinbasic::core::Error::ModuleSpecific, "Something went wrong during the parsing process");
+    0
 }
 
 pub extern fn rusty_sum_two_dwords() -> u32 {
 
-    let parsed_a: u32 = 0;
-    let parsed_b: u32 = 0;
+    let parens_present = thinbasic::core::check_open_parens_optional();
+    let parsed_a = thinbasic::core::parse_u32();
+    thinbasic::core::check_comma();
+    let parsed_b = thinbasic::core::parse_u32();    
+    if parens_present { thinbasic::core::check_close_parens(); }
+    
+    if thinbasic::core::error_free() {
+        return internal::sum_two_dwords(parsed_a, parsed_b)
+    }
 
-    thinbasic::core::parse_u32(&parsed_a);
-    thinbasic::core::check_comma_mandatory();
-    thinbasic::core::parse_u32(&parsed_b);
-
-	internal::sum_two_dwords(parsed_a, parsed_b)
+    thinbasic::core::raise_runtime_error(thinbasic::core::Error::ModuleSpecific, "Something went wrong during the parsing process");
+    0
 }
