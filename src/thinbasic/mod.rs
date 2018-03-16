@@ -74,7 +74,7 @@ pub mod core
     */
 
     #[allow(dead_code)]
-    pub fn add_function<T>(symbol_name: &str, function_ptr: extern fn() -> T) -> i32
+    pub fn add_function<T>(symbol_name: &str, function_ptr: extern fn() -> T, return_type: ReturnType) -> i32
     {
         unsafe
         {
@@ -82,7 +82,7 @@ pub mod core
 
             let thinbasic_loadsymbol: libloading::Symbol<unsafe extern fn(symbol_name: TBStr, return_type: i32, function_ptr: extern fn() -> T, force_overwrite: i32) -> i32> = lib.get(b"thinBasic_LoadSymbol").unwrap();
 
-            thinbasic_loadsymbol(TBStr::from(symbol_name), ReturnType::I32 as i32, function_ptr, 1)
+            thinbasic_loadsymbol(TBStr::from(symbol_name), return_type as i32, function_ptr, 1)
         }
     }
     

@@ -13,8 +13,8 @@ mod interface;	// thinBasic interface
 pub extern fn LoadLocalSymbols() -> i32
 {
 	// exposes the function to thinBasic - please note the return data type is automatically detected
-	thinbasic::core::add_function("rusty_sum_two_longs", interface::rusty_sum_two_longs);
-	thinbasic::core::add_function("rusty_sum_two_dwords", interface::rusty_sum_two_dwords);
+	thinbasic::core::add_function("rusty_sum_two_longs", interface::rusty_sum_two_longs, thinbasic::core::ReturnType::I32);
+	thinbasic::core::add_function("rusty_sum_two_dwords", interface::rusty_sum_two_dwords, thinbasic::core::ReturnType::U32);
 
 	0
 }
