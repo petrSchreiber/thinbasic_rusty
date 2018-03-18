@@ -207,10 +207,226 @@ pub mod core
     */
 
     #[allow(dead_code)]
-    pub enum Error
+    #[derive(Debug)]
+    pub enum RunTimeError
     {
-        ModuleSpecific = 500
-    }   
+        NoError                                 = 0,
+        Parens                                  = 1,
+        NoExp                                   = 2,
+        DivZero                                 = 3,
+        EqualExp                                = 4,
+        NotVar                                  = 5,
+        LabTabFull                              = 6,
+        DupLab                                  = 7,
+        UndefTab                                = 8,
+        ThenExpected                            = 9,
+        ToExpected                              = 10,
+        TooManyFor                              = 11,
+        NextWithoutFor                          = 12,
+        MissingSemicolon                        = 13,
+        CommandRetNoneInExpression              = 14,
+
+        MissQuote                               = 15,
+        BadFile                                 = 16,
+        StrExpected                             = 17,
+        UnknownKeyword                          = 18,
+        MissingOpenparens                       = 19,
+        MissingCloseparens                      = 20,
+        MissingComma                            = 21,
+        MissingSquarecloseparens                = 22,
+
+        EolIncorrect                            = 23,
+
+        DoubleConcatenation                     = 24,
+        CommandUnknownReturnedParameter         = 25,
+        PrimitiveStr                            = 26,
+        PrimitiveNum                            = 27,
+        PrintError                              = 28,
+        PrintErrorNoendofline                   = 29,
+        VariableNotDefined                      = 30,
+        AtomTokenTypeNumeric                    = 31,
+        IfWithoutEndif                          = 32,
+        IfEndifWithoutIf                        = 33,
+        TooManyWhile                            = 34,
+        WhileWithoutWend                        = 35,
+        DimTypeNotDefined                       = 36,
+        ExitNoKeyFound                          = 37,
+        NoEndFunctionFound                      = 38,
+        FunctionNameDuplicate                   = 39,
+        FunctionNameIsKey                       = 40,
+        FunctionNameIsVar                       = 41,
+        FunctionNameIsUdt                       = 42,
+        EndNoKeyFound                           = 43,
+
+        DimMissingAs                            = 44,
+        UndefinedToken                          = 45,
+        UnsupportedChar                         = 46,
+
+        FunctionDeclareMissingAs                = 47,
+        DeclareFunctionOrSubExpected            = 48,
+
+        DoLoopWrongCondition                    = 49,
+
+        MissingAlias                            = 50,
+        MissingLib                              = 51,
+        UndefinedVarType                        = 52,
+        ParameterByrefIncorrectPtr              = 53,
+
+        LoopExpectedWhileOrUntil                = 55,
+
+        EndFunctionWithoutFunction              = 58,
+        EndFunctionFound                        = 59,
+
+        IterateNoKeyFound                       = 60,
+
+        WithEndWithError                        = 64,
+
+        TooNestedDoloop                         = 65,
+        DoLoopMissingDoOrLoop                   = 66,
+
+        VariableNotDimensioned                  = 70,
+        VariableIsNotArray                      = 71,
+        VariableMustbeStringType                = 72,
+
+        RedimNewTypeNotSupported                = 73,
+        RedimPreserveNotValidAbsolute           = 74,
+
+        VariableMustBeUdtType                   = 75,
+
+        KeywordNotExpected                      = 76,
+        TokenNotExpected                        = 77,
+
+        IncludeFileNotFound                     = 80,
+
+        DimUnexpectedKeyword                    = 85,
+
+        FunctionNotSupported                    = 90,
+
+        ArrayFunctionNotSupported               = 91,
+
+        UdtElementNotFound                      = 100,
+        UdtExpected                             = 101,
+        UdtEquOrElementExpected                 = 102,
+
+        AssignmentNotSupported                  = 110,
+
+        RelationalExpected                      = 115,
+
+        ApiLibNotFound                          = 120,
+        ApiFunctionNotFoundInLib                = 121,
+        ApiGeneralAddressNotPresent             = 122,
+
+        CallNotSupportedStatement               = 130,
+        CallFunctionNotFound                    = 131,
+
+        FunctionNotFound                        = 133,
+        FunctionExpectedCallback                = 134,
+
+        EquateAlreadyDefined                    = 135,
+        EquateAlreadyDefinedDifferent           = 136,
+
+        VariableNameDuplicateGlobal             = 142,
+        VariableNameDuplicateFunction           = 144,
+        VariableNameDuplicateLocal              = 145,
+        VariableNameDuplicate                   = 146,
+
+        ForStepShouldBeNegative                 = 150,
+        ForStepShouldBePositive                 = 151,
+        ForExpectedAVariable                    = 152,
+        ForStepIsZero                           = 153,
+        ForVarMustBeNumeric                     = 154,
+
+        AliasCommandNameExpected                = 160,
+        AliasAsExpected                         = 161,
+        AliasUndefNotUndef                      = 162,
+
+        TypeMissingEndUnion                     = 169,
+        TypeMissingEndType                      = 170,
+        TypeMissingEndClass                     = 171,
+        TypeTypeNotDefined                      = 172,
+        TypeMissingAs                           = 173,
+        TypeNameMustbeUndefined                 = 174,
+        TypeArrayMustbeDimensioned              = 175,
+        TypeStringsMustHaveSize                 = 176,
+        TypeElementAlreadyPresent               = 177,
+        TypeElementAlreadyPresentInherit        = 178,
+        TypeDynstringInsideUnion                = 179,
+
+        NoEndRawtextFound                       = 180,
+
+        BeginBlockUnsuported                    = 190,
+        BeginConstMissingEnd                    = 191,
+
+        FunctionParamUnrecognizedType           = 220,
+
+        DoWithoutLoop                           = 245,
+        FunctionMissingAs                       = 246,
+        RegexprMissingTo                        = 247,
+        RegexprMissingIn                        = 248,
+        SelectWithoutEndSelect                  = 249,
+        DuplicateSymbol                         = 250,
+        InvalidnumericChar                      = 251,
+        InvalidDelimiter                        = 252,
+        InvalidDataType                         = 253,
+        VariableExpected                        = 254,
+        VariableVariantExpected                 = 255,
+
+        SelectMissingCase                       = 270,
+        SelectErrorKindofOperation              = 271,
+        SelectCodeBetweenSelectCase             = 272,
+
+        StrptrVariableNotADynstringNum          = 280,
+        StrptrVariableNotADynstringVar          = 281,
+        StrptrVariableNotADynstringUdt          = 282,
+
+        ApicallRefExpected                      = 300,
+
+        ArrayOutOfBound                         = 400,
+
+        ModuleSpecific                          = 500,
+
+        PreparserDirectiveNotSupported          = 800,
+
+        PreparserScriptVersionRequest           = 820,
+
+        InternalReturnMainType                  = 900,
+
+        InternalDecription                      = 910,
+
+        InternalUdtBufferShort                  = 915,
+
+        InternalReturnNoneNoCodePtr             = 921,
+        InternalReturnNumberNoCodePtr           = 922,
+        InternalReturnStringNoCodePtr           = 923,
+
+        ClassNewNoIndexAllowed                  = 5010,
+        ClassNewDifferentClass                  = 5015,
+        ClassNewNoClass                         = 5020,
+        ClassNewExpectedNew                     = 5025,
+        ClassNotInitWithNew                     = 5030,
+        ClassSetNowAllowed                      = 5035,
+
+        ClassMethodPropertyNotfound             = 5100,
+        ClassExpected                           = 5110,
+
+        TraceStopByUser                         = 11000,
+
+        ObfuscationFileNotValid                 = 12000,
+
+        ComGeneric                              = 30000
+    }
+
+    pub fn get_last_error() -> RunTimeError
+    {
+        unsafe
+        {
+            let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+            let thinbasic_getlasterror: libloading::Symbol<unsafe extern fn() -> RunTimeError> = lib.get(b"thinBasic_GetLastError").unwrap();
+            let result = thinbasic_getlasterror();
+
+            return result;
+        }
+    }
 
     pub fn error_free() -> bool
     {
@@ -224,7 +440,7 @@ pub mod core
         }
     }
 
-    pub fn raise_runtime_error(error_type: Error, description: &str) -> bool
+    pub fn raise_runtime_error(error_type: RunTimeError, description: &str) -> bool
     {
         unsafe
         {

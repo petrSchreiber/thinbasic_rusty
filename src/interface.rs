@@ -19,7 +19,7 @@ pub extern fn rusty_sum_two_longs() -> i32 {
         return internal::sum_two_longs(parsed_a, parsed_b)
     }
 
-    thinbasic::core::raise_runtime_error(thinbasic::core::Error::ModuleSpecific, "Something went wrong during the parsing process");
+    thinbasic::core::raise_runtime_error(thinbasic::core::RunTimeError::ModuleSpecific, "Something went wrong during the parsing process");
     0
 }
 
@@ -35,6 +35,6 @@ pub extern fn rusty_sum_two_dwords() -> u32 {
         return internal::sum_two_dwords(parsed_a, parsed_b)
     }
 
-    thinbasic::core::raise_runtime_error(thinbasic::core::Error::ModuleSpecific, "Something went wrong during the parsing process");
+    thinbasic::core::raise_runtime_error(thinbasic::core::RunTimeError::ModuleSpecific, "Something went wrong during the parsing process");
     0
 }
