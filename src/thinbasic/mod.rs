@@ -18,7 +18,7 @@ pub mod core
 
     */
 
-    use thinbasic::core::winapi::um::oleauto::{SysAllocStringByteLen, SysFreeString};
+    use thinbasic::core::winapi::um::oleauto::{SysAllocStringByteLen, SysFreeString, SysStringLen};
 
     pub struct TBStr(*mut u16);
 
@@ -54,9 +54,31 @@ pub mod core
         }
     }
 
+    impl TBStr{
+        #[allow(dead_code)]
+        pub fn ptr(&self) -> &*mut u16 {
+            return &self.0
+        }
+
+        #[allow(dead_code)]
+        pub fn len(&self) -> u32 {        
+            unsafe { SysStringLen(self.0 as *mut u16) }
+        }
+
+        #[allow(dead_code)]
+        fn internal_to_string(&self) -> String {
+            unsafe {
+                let len = self.len();
+                let slice: &[u16] = ::std::slice::from_raw_parts(self.0, len as usize);
+                String::from_utf16_lossy(slice)
+            }
+        }
+    }
+
     #[allow(dead_code)]
     pub enum ReturnType
     {
+        None = 0,
         U8  =  1,
         U16 =  3,
         U32 =  4,       
@@ -94,14 +116,70 @@ pub mod core
     */
 
     #[allow(dead_code)]
-    pub fn parse_i32() -> i32
+    pub fn parse_i16() -> i16
     {
         unsafe
+        {
+            let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+            let thinbasic_parseinteger: libloading::Symbol<unsafe extern fn(*const i16)> = lib.get(b"thinBasic_ParseInteger").unwrap();
+            let num: i16 = 0;
+            thinbasic_parseinteger(&num);
+
+            num
+        }
+    }
+
+    #[allow(dead_code)]
+    pub fn parse_i32() -> i32
+    {
+        unsafe         
         {
             let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
             let thinbasic_parselong: libloading::Symbol<unsafe extern fn(*const i32)> = lib.get(b"thinBasic_ParseLong").unwrap();
             let num: i32 = 0;
             thinbasic_parselong(&num);
+
+            num
+        }
+    }
+
+    #[allow(dead_code)]
+    pub fn parse_i64() -> i64
+    {
+        unsafe         
+        {
+            let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+            let thinbasic_parsequad: libloading::Symbol<unsafe extern fn(*const i64)> = lib.get(b"thinBasic_ParseQuad").unwrap();
+            let num: i64 = 0;
+            thinbasic_parsequad(&num);
+
+            num
+        }
+    }
+
+    #[allow(dead_code)]
+    pub fn parse_u8() -> u8
+    {
+        unsafe
+        {
+            let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+            let thinbasic_parsebyte: libloading::Symbol<unsafe extern fn(*const u8)> = lib.get(b"thinBasic_ParseByte").unwrap();
+            let num: u8 = 0;
+            thinbasic_parsebyte(&num);
+
+            num
+        }
+    }
+
+    #[allow(dead_code)]
+    pub fn parse_u16() -> u16
+    {
+        unsafe
+        {
+            let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+            let thinbasic_parseword: libloading::Symbol<unsafe extern fn(*const u16)> = lib.get(b"thinBasic_ParseWord").unwrap();
+            let num: u16 = 0;
+            thinbasic_parseword(&num);
 
             num
         }
@@ -116,6 +194,34 @@ pub mod core
             let thinbasic_parsedword: libloading::Symbol<unsafe extern fn(*const u32)> = lib.get(b"thinBasic_ParseDWord").unwrap();
             let num: u32 = 0;
             thinbasic_parsedword(&num);
+
+            num
+        }
+    }
+
+    #[allow(dead_code)]
+    pub fn parse_f32() -> f32
+    {
+        unsafe
+        {
+            let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+            let thinbasic_parsesingle: libloading::Symbol<unsafe extern fn(*const f32)> = lib.get(b"thinBasic_ParseSingle").unwrap();
+            let num: f32 = 0.0;
+            thinbasic_parsesingle(&num);
+
+            num
+        }
+    }
+
+    #[allow(dead_code)]
+    pub fn parse_f64() -> f64
+    {
+        unsafe
+        {
+            let lib: libloading::Library = libloading::Library::new("thinCore.dll").unwrap();
+            let thinbasic_parsedouble: libloading::Symbol<unsafe extern fn(*const f64)> = lib.get(b"thinBasic_ParseDouble").unwrap();
+            let num: f64 = 0.0;
+            thinbasic_parsedouble(&num);
 
             num
         }
@@ -416,6 +522,7 @@ pub mod core
         ComGeneric                              = 30000
     }
 
+    #[allow(dead_code)]
     pub fn get_last_error() -> RunTimeError
     {
         unsafe
@@ -428,6 +535,7 @@ pub mod core
         }
     }
 
+    #[allow(dead_code)]
     pub fn error_free() -> bool
     {
         unsafe
@@ -440,6 +548,7 @@ pub mod core
         }
     }
 
+    #[allow(dead_code)]
     pub fn raise_runtime_error(error_type: RunTimeError, description: &str) -> bool
     {
         unsafe
