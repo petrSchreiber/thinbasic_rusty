@@ -4,7 +4,7 @@
 
 */
 
-mod thinbasic;	// declaration of thinBasic Core functions
+extern crate thinbasic;	// declaration of thinBasic Core functions
 mod internal;	// internal implementation
 mod interface;	// thinBasic interface
 
