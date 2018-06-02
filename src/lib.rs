@@ -24,5 +24,7 @@ pub extern fn LoadLocalSymbols() -> i32
 	thinbasic::core::add_function("rusty_sum_two_singles" , interface::rusty_sum_two_singles , thinbasic::core::ReturnType::F32);
 	thinbasic::core::add_function("rusty_sum_two_doubles" , interface::rusty_sum_two_doubles , thinbasic::core::ReturnType::F64);
 
+	thinbasic::core::add_string_equate("$RUSTY_STRING_EQUATE", "Hello ThinBASIC");
+
 	0
 }
