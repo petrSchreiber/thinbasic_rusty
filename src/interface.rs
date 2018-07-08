@@ -134,3 +134,16 @@ pub extern fn rusty_sum_two_doubles() -> f64 {
     thinbasic::core::raise_runtime_error(thinbasic::core::RunTimeError::ModuleSpecific, "Something went wrong during the parsing process");
     0.0
 }
+
+pub extern fn rusty_to_upper_case() -> thinbasic::core::TBStr {
+    let parens_present = thinbasic::core::check_open_parens_optional();
+    let parsed_text = thinbasic::core::parse_tbstr();
+    if parens_present { thinbasic::core::check_close_parens(); }
+
+    if thinbasic::core::error_free() {
+        let text = parsed_text.to_string().to_uppercase();
+        return thinbasic::core::TBStr::from(text.as_str())
+    }
+
+    thinbasic::core::TBStr::from("")
+}
